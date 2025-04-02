@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4e61cxewou58"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iixbc"]
+size = Vector2(20.7843, 24.7429)
+
+[node name="CENTRO" type="Area2D"]
+
+[node name="col" type="CollisionShape2D" parent="."]
+scale = Vector2(2.04, 1.4)
+shape = SubResource("RectangleShape2D_iixbc")
+debug_color = Color(0.988807, 0, 0.297786, 0.42)

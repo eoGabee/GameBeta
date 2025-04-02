@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmyv6sch3vwl"]
+
+[ext_resource type="Script" path="res://_dev/scripts/builds/casa.gd" id="1_cn68w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iixbc"]
+size = Vector2(20.7843, 24.7429)
+
+[node name="CASA" type="Area2D" groups=["casa"]]
+script = ExtResource("1_cn68w")
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2(0.800001, 0)
+scale = Vector2(1.87388, 1.286)
+shape = SubResource("RectangleShape2D_iixbc")
+debug_color = Color(0.365654, 0.479081, 1, 0.42)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

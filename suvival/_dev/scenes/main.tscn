@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce5beunltau6y"]
+
+[ext_resource type="PackedScene" uid="uid://chclr0xj174bs" path="res://_gameobj/chars/survivalist.tscn" id="1_0su6v"]
+[ext_resource type="PackedScene" uid="uid://h618dk2q4tlu" path="res://_gameobj/chars/villager.tscn" id="2_nkoxy"]
+
+[node name="Main" type="Node2D"]
+
+[node name="survivalist" parent="." instance=ExtResource("1_0su6v")]
+
+[node name="Villager" parent="." instance=ExtResource("2_nkoxy")]
+position = Vector2(224, 231)
+
+[node name="Villager2" parent="." instance=ExtResource("2_nkoxy")]
+position = Vector2(147, 99)
+
+[node name="Villager3" parent="." instance=ExtResource("2_nkoxy")]
+position = Vector2(279, 79)

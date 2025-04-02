@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://kqcquupy3aen"]
+
+[ext_resource type="Script" path="res://_dev/scripts/builds/fogueira.gd" id="1_qghgq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c2tbk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wb2q3"]
+radius = 136.312
+
+[node name="FOGUEIRA" type="Area2D" groups=["colonia"]]
+script = ExtResource("1_qghgq")
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c2tbk")
+debug_color = Color(0.988807, 0, 0.297786, 0.42)
+
+[node name="range" type="Area2D" parent="."]
+
+[node name="col" type="CollisionShape2D" parent="range"]
+shape = SubResource("CircleShape2D_wb2q3")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[connection signal="mouse_entered" from="range" to="." method="_on_range_mouse_entered"]
+[connection signal="mouse_exited" from="range" to="." method="_on_range_mouse_exited"]
