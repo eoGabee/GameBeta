@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c24napmwa5gwo"]
+
+[ext_resource type="Script" path="res://_dev/scripts/recursos/arvore.gd" id="1_eb04r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fspic"]
+
+[node name="Arvore" type="Area2D" groups=["madeira", "recurso"]]
+scale = Vector2(4, 4)
+script = ExtResource("1_eb04r")
+
+[node name="texture" type="Sprite2D" parent="."]
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_fspic")
+debug_color = Color(0, 0.647059, 0.258824, 0)

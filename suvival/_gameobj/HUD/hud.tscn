@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxiuo3edml3f8"]
+
+[ext_resource type="Script" path="res://_dev/scripts/interface/hud.gd" id="1_q5ipa"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q5ipa")
+
+[node name="Canva" type="CanvasLayer" parent="."]
+
+[node name="bg1" type="ColorRect" parent="Canva"]
+offset_right = 132.0
+offset_bottom = 123.0
+color = Color(0, 0, 0, 0.231373)
+
+[node name="Label" type="Label" parent="Canva"]
+offset_left = 13.0
+offset_top = 8.0
+offset_right = 112.0
+offset_bottom = 31.0
+text = "MADEIRA: 00"
+
+[node name="Label2" type="Label" parent="Canva"]
+offset_left = 13.0
+offset_top = 36.0
+offset_right = 92.0
+offset_bottom = 59.0
+text = "PEDRA: 00"
+
+[node name="Label3" type="Label" parent="Canva"]
+offset_left = 13.0
+offset_top = 65.0
+offset_right = 105.0
+offset_bottom = 88.0
+text = "COMIDA: 00"
+
+[node name="Label4" type="Label" parent="Canva"]
+offset_left = 13.0
+offset_top = 92.0
+offset_right = 105.0
+offset_bottom = 115.0
+text = "Folego: 00"

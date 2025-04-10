@@ -1,17 +1,94 @@
-[gd_scene load_steps=3 format=3 uid="uid://ce5beunltau6y"]
+[gd_scene load_steps=5 format=3 uid="uid://ce5beunltau6y"]
 
 [ext_resource type="PackedScene" uid="uid://chclr0xj174bs" path="res://_gameobj/chars/survivalist.tscn" id="1_0su6v"]
 [ext_resource type="PackedScene" uid="uid://h618dk2q4tlu" path="res://_gameobj/chars/villager.tscn" id="2_nkoxy"]
+[ext_resource type="PackedScene" uid="uid://c24napmwa5gwo" path="res://_gameobj/builds/arvore.tscn" id="3_y0d40"]
+[ext_resource type="PackedScene" uid="uid://bhbjc3jf6t66k" path="res://_gameobj/builds/pedra.tscn" id="4_e8brp"]
 
 [node name="Main" type="Node2D"]
 
 [node name="survivalist" parent="." instance=ExtResource("1_0su6v")]
 
-[node name="Villager" parent="." instance=ExtResource("2_nkoxy")]
+[node name="Villager" type="Node2D" parent="."]
+
+[node name="Villager" parent="Villager" instance=ExtResource("2_nkoxy")]
 position = Vector2(224, 231)
 
-[node name="Villager2" parent="." instance=ExtResource("2_nkoxy")]
+[node name="Villager2" parent="Villager" instance=ExtResource("2_nkoxy")]
 position = Vector2(147, 99)
 
-[node name="Villager3" parent="." instance=ExtResource("2_nkoxy")]
+[node name="Villager3" parent="Villager" instance=ExtResource("2_nkoxy")]
 position = Vector2(279, 79)
+
+[node name="Arvore" type="Node2D" parent="."]
+
+[node name="Arvore" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(1, 262)
+
+[node name="Arvore2" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(-295, 10)
+
+[node name="Arvore3" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(-47, 522)
+
+[node name="Arvore4" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(721, 398)
+
+[node name="Arvore5" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(677, -166)
+
+[node name="Arvore6" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(297, -302)
+
+[node name="Arvore7" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(429, 166)
+
+[node name="Arvore8" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(-327, -334)
+
+[node name="Arvore9" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(-503, 262)
+
+[node name="Arvore10" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(533, 670)
+
+[node name="Arvore11" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(965, 126)
+
+[node name="Arvore12" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(729, -550)
+
+[node name="Arvore13" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(224, -602)
+
+[node name="Arvore14" parent="Arvore" instance=ExtResource("3_y0d40")]
+position = Vector2(-840, -34)
+
+[node name="Pedra" type="Node2D" parent="."]
+
+[node name="Pedra" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(-212, -192)
+
+[node name="Pedra2" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(-288, 364)
+
+[node name="Pedra3" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(444, -204)
+
+[node name="Pedra4" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(572, 240)
+
+[node name="Pedra5" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(216, 696)
+
+[node name="Pedra6" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(-736, 552)
+
+[node name="Pedra7" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(-120, -556)
+
+[node name="Pedra8" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(-796, -540)
+
+[node name="Pedra9" parent="Pedra" instance=ExtResource("4_e8brp")]
+position = Vector2(1028, -320)

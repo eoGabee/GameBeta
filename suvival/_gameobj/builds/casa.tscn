@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iixbc"]
 size = Vector2(20.7843, 24.7429)
 
-[node name="CASA" type="Area2D" groups=["casa"]]
+[node name="CASA" type="Area2D" groups=["casa", "estruturas"]]
 script = ExtResource("1_cn68w")
 
 [node name="col" type="CollisionShape2D" parent="."]

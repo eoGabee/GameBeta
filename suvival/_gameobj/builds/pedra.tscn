@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhbjc3jf6t66k"]
+
+[ext_resource type="Script" path="res://_dev/scripts/recursos/pedra.gd" id="1_nnd1d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_28n4k"]
+size = Vector2(20, 12)
+
+[node name="Pedra" type="Area2D" groups=["pedra", "recurso"]]
+scale = Vector2(4, 4)
+script = ExtResource("1_nnd1d")
+
+[node name="texture" type="Sprite2D" parent="."]
+
+[node name="col" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_28n4k")
+debug_color = Color(2.76752e-07, 0.18179, 0.217941, 0.42)

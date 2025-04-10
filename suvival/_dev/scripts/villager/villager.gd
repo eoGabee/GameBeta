@@ -1,64 +1,89 @@
-extends CharacterBody2D
-class_name Villager
+extends entity
+class_name villager
 
-var can_do_anything:bool = false
-var speed = 50
+var temcolonia: bool = false
+var seguindo_ordem: bool = false
+var waiting: bool = false
+var patrol_area: Rect2
+var target_point: Vector2
 
-var casa
-var colonia
+@export var centro: Vector2
+@export var casa: Vector2
+@export var colonia: Area2D
 
-var arr = []
-
-signal come_back
-
-var patrol:bool = true
+@export var stop_distance: float = 10.0
+@export var wait_time: float = 3.0
 
 func _ready() -> void:
-	casa = get_tree().get_first_node_in_group("casa")
+	if temcolonia and colonia:
+		definir_area_de_patrulha()
+		choose_new_target()
 
 func _process(delta: float) -> void:
-	
-	var s = get_tree().get_first_node_in_group("casa")
-	if s:
-		casa = s
-	
-	if casa:
-		arr.append(casa)
-	if colonia:
-		arr.append(colonia)
-	
-	if not colonia:
-		patrol = true
-	
-	if not patrol:
-		move_towards_casa(delta, arr.pick_random())
+	if not temcolonia:
+		achar_colonia()
+	elif not seguindo_ordem:
+		patrulha()
+
+func achar_colonia():
+	var colonias = get_tree().get_nodes_in_group("colonia")
+	for i in colonias:
+		if i.colonia_moradores < i.colonia_max:
+			i.colonia_moradores_obj.append(self)
+			colonia = i
+			temcolonia = true
+			definir_area_de_patrulha()
+			choose_new_target()
+			break
+
+func definir_area_de_patrulha():
+	if colonia == null:
+		push_error("Colônia não está definida!")
+		return
+
+	var collision_shape = colonia.get_node_or_null("col")
+	if collision_shape == null or collision_shape.shape == null:
+		push_error("⚠️ CollisionShape2D 'col' está ausente ou sem shape.")
+		return
+
+	var shape = collision_shape.shape
+
+	var area_center = collision_shape.global_position
+	var size: Vector2
+
+	if shape is RectangleShape2D:
+		size = shape.size
+	elif shape is CircleShape2D:
+		var r = shape.radius
+		size = Vector2(r * 2, r * 2)
 	else:
-		move_and_slide()
+		push_error("⚠️ Tipo de shape não suportado: " + str(shape))
+		return
 
-func move_towards_casa(delta: float, dir) -> void:
-	# Mover o villager suavemente em direção à casa
-	var direction = dir.position - position
-	# Use 'normalized()' para garantir que o movimento tenha a mesma velocidade independentemente da distância
-	if direction.length() > 5:  # Defina um limite de proximidade para parar o movimento
-		velocity = direction.normalized() * speed
-		move_and_slide()  # Mover o personagem suavemente
+	var top_left = area_center - (size / 2)
+	patrol_area = Rect2(top_left, size)
+
+
+
+func patrulha():
+	if waiting:
+		return
+
+	var direction = (target_point - global_position).normalized()
+	var distance = global_position.distance_to(target_point)
+
+	if distance > stop_distance:
+		velocity = direction * speed
 	else:
-		# Chegou ao destino, parar de mover
-		velocity = Vector2()
+		velocity = Vector2.ZERO
+		waiting = true
+		await get_tree().create_timer(wait_time).timeout
+		choose_new_target()
+		waiting = false
 
-func _on_walktimer_timeout() -> void:
-	if patrol:
-		velocity = lerp(velocity, Vector2(randi_range(-10, 10), randi_range(-10,10)) * speed, 0.1)
-func _on_walktimer_2_timeout() -> void:
-	if patrol:
-		velocity = Vector2()
-func _on_come_back() -> void:
-	patrol = false
-	
-func _on_vision_area_entered(area: Area2D) -> void:
-	if area.is_in_group("colonia"):
-		colonia = area
+	move_and_slide()
 
-
-func _on_rotine_timeout() -> void:
-	patrol = not patrol
+func choose_new_target():
+	var x = randf_range(patrol_area.position.x, patrol_area.position.x + patrol_area.size.x)
+	var y = randf_range(patrol_area.position.y, patrol_area.position.y + patrol_area.size.y)
+	target_point = Vector2(x, y)

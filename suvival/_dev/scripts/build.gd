@@ -4,7 +4,6 @@ extends Node2D
 @onready var centro = preload("res://_gameobj/builds/centro.tscn")
 @onready var casa = preload("res://_gameobj/builds/casa.tscn")
 
-var can_build:bool = false
 
 enum builds {
 	OFF,
@@ -14,22 +13,39 @@ enum builds {
 	BANCO
 }
 var selected:builds = builds.FOGUEIRA
+var can_b
+
+func can_build(mp):
+	var estruturas = get_tree().get_nodes_in_group("colonia")
+	var estrutura_proxima = null
+	var menor_dist = INF  # Define a menor distância inicial como infinito
+
+	for i in estruturas:
+		var distancia = (i.global_position - mp).length()  # Calcula a distância real
+		if distancia < 150 and distancia < menor_dist:
+			menor_dist = distancia
+			estrutura_proxima = i  # Guarda o objeto mais próximo encontrado
+
+	return estrutura_proxima  # Retorna a estrutura mais próxima dentro do limite
+
 
 func _process(delta: float) -> void:
+	can_b = can_build(get_global_mouse_position())
 	match selected:
 		builds.OFF:
 			pass
 		builds.FOGUEIRA:
-			if !can_build:
-				add_build(fogueira)
+			if Playerstats.madeira > 10 and Input.is_action_just_pressed("RMB"):
+					add_build(fogueira)
+					Playerstats.madeira -= 10
 		builds.CENTRO:
-			if can_build:
+			if can_b:
 				add_build(centro)
 		builds.CASA:
-			if can_build:
+			if can_b:
 				add_build(casa)
 		builds.BANCO:
-			if can_build:
+			if can_b:
 				pass
 		
 	if Input.is_action_just_pressed("1"):
@@ -46,5 +62,6 @@ func add_build(b):
 		var instance = b.instantiate()
 		add_child(instance)
 		instance.position = get_global_mouse_position()
+		instance.add_to_group("estruturas")  # Garante que a nova estrutura será verificada
 		selected = builds.OFF
 		

@@ -3,7 +3,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iixbc"]
 size = Vector2(20.7843, 24.7429)
 
-[node name="CENTRO" type="Area2D"]
+[node name="CENTRO" type="Area2D" groups=["estruturas"]]
 
 [node name="col" type="CollisionShape2D" parent="."]
 scale = Vector2(2.04, 1.4)

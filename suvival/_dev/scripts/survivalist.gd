@@ -1,8 +1,10 @@
-extends CharacterBody2D
+extends entity
 class_name MainCharacter
 
-var speed:float = 200
 var dash_force:float = 500
+
+func _ready() -> void:
+	speed = 200
 
 func dir():
 	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
