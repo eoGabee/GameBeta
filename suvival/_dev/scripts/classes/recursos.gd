@@ -1,29 +1,29 @@
 extends Area2D
 class_name Recursos
 
-@onready var item:=preload("res://_gameobj/item.tscn")
+@export var saude: float = 100.0
+@export var tipo: String = "madeira"
+@export var quem_vai_quebrar: Node2D = null
+@onready var item = preload("res://_gameobj/item.tscn") # Substitua pelo seu item
 
-var quebravel:bool = false
-var saude:float = 100
+func _ready():
+	pedir_coleta()
 
-func quebrar(item:String):
-	if quebravel and Input.is_action_just_pressed("RMB"):
-		saude -= 20
-		CameraShake.shake(0.2, 8.0)
-	
-	if saude <= 0:
-		dropar_item(item)
-		await 10
-		queue_free()
+func pedir_coleta():
+	var colonias = get_tree().get_nodes_in_group("colonia")
+	if colonias.size() > 0:
+		colonias[0].registrar_recurso(self)
 
-func dropar_item(item_):
-	for i in randi_range(1, 4):
-		var instance = item.instantiate()
-		get_parent().add_child(instance)
-		instance.position = global_position
-		instance.item = item_
-
-func _mouse_enter() -> void:
-	quebravel = true
-func _mouse_exit() -> void:
-	quebravel = false
+func quebrar(item_: String):
+	if mouse_entered:
+		saude -= 50
+		if saude <= 0:
+			dropar_item(item_)
+			queue_free()
+func dropar_item(item_: String):
+	var quantidade = randi_range(1, 3)
+	for i in quantidade:
+		var instancia = item.instantiate()
+		get_parent().add_child(instancia)
+		instancia.position = global_position
+		instancia.item = item_

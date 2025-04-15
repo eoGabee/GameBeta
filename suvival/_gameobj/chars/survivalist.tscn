@@ -1,8 +1,70 @@
-[gd_scene load_steps=5 format=3 uid="uid://chclr0xj174bs"]
+[gd_scene load_steps=9 format=3 uid="uid://chclr0xj174bs"]
 
-[ext_resource type="Script" path="res://_dev/scripts/survivalist.gd" id="1_nvkjt"]
+[ext_resource type="Script" uid="uid://b7bq7nl6wpj5r" path="res://_dev/scripts/survivalist.gd" id="1_nvkjt"]
 [ext_resource type="PackedScene" uid="uid://bxiuo3edml3f8" path="res://_gameobj/HUD/hud.tscn" id="2_2woc5"]
-[ext_resource type="Script" path="res://_dev/scripts/cam.gd" id="2_5g7jj"]
+[ext_resource type="Script" uid="uid://d3nj8d6hlk15d" path="res://_dev/scripts/cam.gd" id="2_5g7jj"]
+[ext_resource type="Script" uid="uid://cldvhbvpp4p75" path="res://_dev/scripts/combate.gd" id="2_qj2ij"]
+
+[sub_resource type="Animation" id="Animation_xaofw"]
+resource_name = "attack_sword"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("col:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.366667, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 10, 12, 10, 12, 10, 12, 10, 12, 10, 12, 10, 12, 10, 12), PackedVector2Array(0, 0, 10, 12, 17, 13, 19, 7, 21, 0, 19, -5, 17, -10, 10, -12), PackedVector2Array(0, 0, 10, -12, 10, -12, 10, -12, 10, -12, 10, -12, 10, -12, 10, -12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("col:build_mode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.366667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qj2ij"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("col:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 10, 12, 17, 13, 19, 7, 21, 0, 19, -5, 17, -10, 10, -12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("col:build_mode")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7x646"]
+_data = {
+&"RESET": SubResource("Animation_qj2ij"),
+&"attack_sword": SubResource("Animation_xaofw")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eey5u"]
 
@@ -10,15 +72,36 @@
 collision_mask = 0
 script = ExtResource("1_nvkjt")
 
+[node name="COMBATE" type="Node2D" parent="."]
+script = ExtResource("2_qj2ij")
+
+[node name="HitBox" type="Area2D" parent="COMBATE" groups=["DamageZone"]]
+
+[node name="col" type="CollisionPolygon2D" parent="COMBATE/HitBox"]
+polygon = PackedVector2Array(0, 0, 10, 12, 17, 13, 19, 7, 21, 0, 19, -5, 17, -10, 10, -12)
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="COMBATE/HitBox"]
+libraries = {
+&"": SubResource("AnimationLibrary_7x646")
+}
+
 [node name="col" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_eey5u")
 
 [node name="cam" type="Camera2D" parent="."]
 scale = Vector2(0.487961, 0.487961)
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 script = ExtResource("2_5g7jj")
 
 [node name="HUD" parent="." instance=ExtResource("2_2woc5")]
+
+[node name="run_taxa" type="Timer" parent="."]
+autostart = true
+
+[connection signal="dash" from="COMBATE" to="COMBATE" method="_on_dash"]
+[connection signal="animation_finished" from="COMBATE/HitBox/AnimationPlayer" to="COMBATE" method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="run_taxa" to="." method="_on_run_taxa_timeout"]

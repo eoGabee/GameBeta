@@ -1,26 +1,47 @@
-extends entity
+extends CharacterBody2D
 class_name MainCharacter
 
-var dash_force:float = 500
+@onready var COMBATREF = $COMBATE
 
-func _ready() -> void:
-	speed = 200
+var direction
 
-func dir():
+#################################################################################
+##                                MOVIMENTAÇÃO                                 ##
+#################################################################################
+
+# Retorna o vetor de direção baseado nos inputs
+func dir() -> Vector2:
 	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down").normalized()
 
+# Lógica principal de movimento
 func move():
-	move_and_slide()
-	dash()
-	
-	if dir():
-		velocity = lerp(velocity, dir() * speed, 0.1)
-	else:
-		velocity = lerp(velocity, Vector2(), 0.1)
+	if COMBATREF.states == COMBATREF.StateMachine.IDLE:
+		handle_movement_input()
+		dash()
 
+# Aplica um impulso extra na direção atual se LMB for pressionado
 func dash():
-	if velocity != Vector2() and Input.is_action_just_pressed("LMB"):
-		velocity += dir() * dash_force
+	if Playerstats.folego >= Playerstats.perda_folego_dash:
+		if velocity != Vector2.ZERO and Input.is_action_just_pressed("dash"):
+			velocity += direction * Playerstats.dash_force
+			Playerstats.folego -= Playerstats.perda_folego_dash
 
-func _process(delta: float) -> void:
+func handle_movement_input():
+	var direction = dir() #retorno do Input#
+	if direction != Vector2.ZERO: #verificação de vetor#
+		var speed = Playerstats.velocidade #velocidade padrao#
+		if Input.is_action_pressed("run") and Playerstats.folego >= Playerstats.perda_folego_corrida: #checagem de ação#
+			speed = Playerstats.velocidade_correndo #velocidade correndo#
+		velocity = lerp(velocity, direction * speed, 0.1) #aplica movimento#
+	else:
+		velocity = lerp(velocity, Vector2.ZERO, 0.1) #reduz movimento#
+
+# Atualiza a cada frame
+func _physics_process(delta: float) -> void:
+	direction = dir()
 	move()
+	move_and_slide()
+
+func _on_run_taxa_timeout() -> void:
+	if velocity != Vector2.ZERO and Input.is_action_pressed("run") and Playerstats.folego >= Playerstats.perda_folego_corrida:
+		Playerstats.folego -= Playerstats.perda_folego_corrida

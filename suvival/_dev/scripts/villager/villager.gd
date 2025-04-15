@@ -1,76 +1,33 @@
-extends entity
-class_name villager
+extends CharacterBody2D
+class_name Villager
 
-var temcolonia: bool = false
-var seguindo_ordem: bool = false
-var waiting: bool = false
-var patrol_area: Rect2
-var target_point: Vector2
-
-@export var centro: Vector2
-@export var casa: Vector2
-@export var colonia: Area2D
-
+@export var speed: float = 100.0
 @export var stop_distance: float = 10.0
-@export var wait_time: float = 3.0
+@export var wait_time: float = 2.0
 
-func _ready() -> void:
-	if temcolonia and colonia:
-		definir_area_de_patrulha()
-		choose_new_target()
+var seguindo_ordem := false
+var waiting := false
+var alvo_atual: Node2D = null
+var colonia: Node = null
 
-func _process(delta: float) -> void:
-	if not temcolonia:
-		achar_colonia()
-	elif not seguindo_ordem:
-		patrulha()
+func _ready():
+	add_to_group("villager")
+	achar_colonia()
 
-func achar_colonia():
-	var colonias = get_tree().get_nodes_in_group("colonia")
-	for i in colonias:
-		if i.colonia_moradores < i.colonia_max:
-			i.colonia_moradores_obj.append(self)
-			colonia = i
-			temcolonia = true
-			definir_area_de_patrulha()
-			choose_new_target()
-			break
-
-func definir_area_de_patrulha():
-	if colonia == null:
-		push_error("Colônia não está definida!")
-		return
-
-	var collision_shape = colonia.get_node_or_null("col")
-	if collision_shape == null or collision_shape.shape == null:
-		push_error("⚠️ CollisionShape2D 'col' está ausente ou sem shape.")
-		return
-
-	var shape = collision_shape.shape
-
-	var area_center = collision_shape.global_position
-	var size: Vector2
-
-	if shape is RectangleShape2D:
-		size = shape.size
-	elif shape is CircleShape2D:
-		var r = shape.radius
-		size = Vector2(r * 2, r * 2)
+func _process(delta):
+	if seguindo_ordem:
+		coletar()
 	else:
-		push_error("⚠️ Tipo de shape não suportado: " + str(shape))
+		# Idle ou patrulha aqui se quiser
+		pass
+
+func coletar():
+	if alvo_atual == null:
+		seguindo_ordem = false
 		return
 
-	var top_left = area_center - (size / 2)
-	patrol_area = Rect2(top_left, size)
-
-
-
-func patrulha():
-	if waiting:
-		return
-
-	var direction = (target_point - global_position).normalized()
-	var distance = global_position.distance_to(target_point)
+	var direction = (alvo_atual.global_position - global_position).normalized()
+	var distance = global_position.distance_to(alvo_atual.global_position)
 
 	if distance > stop_distance:
 		velocity = direction * speed
@@ -78,12 +35,22 @@ func patrulha():
 		velocity = Vector2.ZERO
 		waiting = true
 		await get_tree().create_timer(wait_time).timeout
-		choose_new_target()
+
+		if alvo_atual and alvo_atual.has_method("quebrar"):
+			alvo_atual.quebrar("madeira")  # troca conforme tipo de recurso
+
+		alvo_atual = null
+		seguindo_ordem = false
 		waiting = false
 
 	move_and_slide()
 
-func choose_new_target():
-	var x = randf_range(patrol_area.position.x, patrol_area.position.x + patrol_area.size.x)
-	var y = randf_range(patrol_area.position.y, patrol_area.position.y + patrol_area.size.y)
-	target_point = Vector2(x, y)
+func receber_ordem(recurso: Node2D):
+	alvo_atual = recurso
+	seguindo_ordem = true
+
+func achar_colonia():
+	var colonias = get_tree().get_nodes_in_group("colonia")
+	if colonias.size() > 0:
+		colonia = colonias[0]
+		colonia.colonia_moradores_obj.append(self)

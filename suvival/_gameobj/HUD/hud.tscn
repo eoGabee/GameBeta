@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxiuo3edml3f8"]
+[gd_scene load_steps=3 format=3 uid="uid://bxiuo3edml3f8"]
 
-[ext_resource type="Script" path="res://_dev/scripts/interface/hud.gd" id="1_q5ipa"]
+[ext_resource type="Script" uid="uid://dnfmrgcug5lip" path="res://_dev/scripts/interface/hud.gd" id="1_q5ipa"]
+[ext_resource type="PackedScene" uid="uid://ch4kj22qwjg6i" path="res://_gameobj/HUD/menu_hud_craft.tscn" id="2_3u55h"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -45,3 +46,5 @@ offset_top = 92.0
 offset_right = 105.0
 offset_bottom = 115.0
 text = "Folego: 00"
+
+[node name="MENU_HUD_CRAFT" parent="." instance=ExtResource("2_3u55h")]
