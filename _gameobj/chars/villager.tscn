@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://h618dk2q4tlu"]
+
+[ext_resource type="Script" uid="uid://blfl8oqv5pfca" path="res://_dev/scripts/villager/villager.gd" id="1_5h60l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5fvw7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kwf0g"]
+radius = 198.01
+
+[node name="Villager" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_5h60l")
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_5fvw7")
+debug_color = Color(0.515557, 0.00240577, 0.786643, 0.42)
+
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="col" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_kwf0g")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="walktimer" type="Timer" parent="."]
+wait_time = 3.5
+autostart = true
+
+[node name="walktimer2" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="rotine" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
+[connection signal="area_exited" from="Vision" to="." method="_on_vision_area_exited"]
+[connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]
+[connection signal="timeout" from="walktimer" to="." method="_on_walktimer_timeout"]
+[connection signal="timeout" from="walktimer2" to="." method="_on_walktimer_2_timeout"]
+[connection signal="timeout" from="rotine" to="." method="_on_rotine_timeout"]

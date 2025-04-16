@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://wbiy222g4wtp"]
+
+[ext_resource type="Script" uid="uid://kavui7cyhlg4" path="res://_dev/scripts/item.gd" id="1_1bjcj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gic7n"]
+
+[node name="Item" type="Area2D"]
+modulate = Color(1, 0, 1, 1)
+self_modulate = Color(1, 0, 1, 1)
+script = ExtResource("1_1bjcj")
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gic7n")
+debug_color = Color(1, 0, 0.701961, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

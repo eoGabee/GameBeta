@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl583wdlsghl2"]
+
+[ext_resource type="PackedScene" uid="uid://qsi35e54ym44" path="res://_gameobj/chars/hit_box.tscn" id="1_7agyx"]
+
+[node name="COMBATE" type="Node2D"]
+
+[node name="HitBox" parent="." instance=ExtResource("1_7agyx")]

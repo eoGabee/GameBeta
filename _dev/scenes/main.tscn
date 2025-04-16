@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce5beunltau6y"]
+
+[ext_resource type="PackedScene" uid="uid://chclr0xj174bs" path="res://_gameobj/chars/survivalist.tscn" id="1_0su6v"]
+[ext_resource type="PackedScene" uid="uid://djchgbxrppg1f" path="res://_gameobj/builds/arvore.tscn" id="2_as0kd"]
+
+[node name="Main" type="Node2D"]
+
+[node name="survivalist" parent="." instance=ExtResource("1_0su6v")]
+
+[node name="Villager" type="Node2D" parent="."]
+
+[node name="Recursos" type="Node2D" parent="."]
+
+[node name="Arvore" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(0, -71)
+
+[node name="Arvore10" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(-11, 77)
+
+[node name="Arvore2" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(140, 51)
+
+[node name="Arvore3" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(98, -75)
+
+[node name="Arvore4" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(-127, 15)
+
+[node name="Arvore5" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(-106, -56)
+
+[node name="Arvore6" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(-74, 63)
+
+[node name="Arvore7" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(-211, -79)
+
+[node name="Arvore8" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(-229, 76)
+
+[node name="Arvore9" parent="Recursos" instance=ExtResource("2_as0kd")]
+position = Vector2(198, -29)

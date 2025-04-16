@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyvdbrv84te65"]
+
+[ext_resource type="Script" path="res://_dev/scripts/builds/fogueira.gd" id="1_qghgq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c2tbk"]
+radius = 109.399
+
+[node name="FOGUEIRA" type="Area2D" groups=["colonia", "estruturas"]]
+script = ExtResource("1_qghgq")
+
+[node name="col" type="CollisionShape2D" parent="."]
+scale = Vector2(1.21422, 1.21422)
+shape = SubResource("CircleShape2D_c2tbk")
+debug_color = Color(0.988235, 0, 0.298039, 0)

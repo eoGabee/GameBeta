@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://djchgbxrppg1f"]
+
+[ext_resource type="Script" uid="uid://8bx52l4rjefh" path="res://_dev/scripts/builds/arvore.gd" id="1_so6lg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qa2q1"]
+
+[node name="Arvore" type="Area2D" groups=["recurso"]]
+script = ExtResource("1_so6lg")
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qa2q1")

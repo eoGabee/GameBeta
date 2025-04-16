@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs66r1npv47h7"]
+
+[ext_resource type="Texture2D" uid="uid://dganf0yrccbft" path="res://icon.svg" id="1_185tv"]
+
+[node name="slot" type="Control"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+
+[node name="color" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 143.0
+offset_bottom = 50.0
+color = Color(0, 0, 0, 0.67451)
+
+[node name="texture" type="Sprite2D" parent="."]
+position = Vector2(23, 25)
+scale = Vector2(0.304688, 0.304688)
+texture = ExtResource("1_185tv")
+
+[node name="name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 6.0
+offset_right = 132.0
+offset_bottom = 29.0
+text = "item_name"
+
+[node name="cost" type="Label" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 22.0
+offset_right = 119.0
+offset_bottom = 45.0
+text = "item_cost"

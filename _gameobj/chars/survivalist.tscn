@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://chclr0xj174bs"]
+
+[ext_resource type="Script" uid="uid://b7bq7nl6wpj5r" path="res://_dev/scripts/survivalist.gd" id="1_nvkjt"]
+[ext_resource type="PackedScene" uid="uid://bxiuo3edml3f8" path="res://_gameobj/HUD/hud.tscn" id="2_2woc5"]
+[ext_resource type="Script" uid="uid://d3nj8d6hlk15d" path="res://_dev/scripts/cam.gd" id="2_5g7jj"]
+[ext_resource type="PackedScene" uid="uid://qsi35e54ym44" path="res://_gameobj/chars/hit_box.tscn" id="2_qj2ij"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qj2ij"]
+
+[node name="survivalist" type="CharacterBody2D" groups=["player"]]
+collision_mask = 0
+script = ExtResource("1_nvkjt")
+
+[node name="HitBox" parent="." instance=ExtResource("2_qj2ij")]
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_qj2ij")
+
+[node name="cam" type="Camera2D" parent="."]
+scale = Vector2(0.487961, 0.487961)
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("2_5g7jj")
+
+[node name="HUD" parent="." instance=ExtResource("2_2woc5")]
+
+[node name="run_taxa" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="run_taxa" to="." method="_on_run_taxa_timeout"]
