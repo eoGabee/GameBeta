@@ -2,7 +2,9 @@ extends Area2D
 
 @onready var player = get_parent()
 @onready var magia_slots:Array = []
+
 @export var states:StateMachine = StateMachine.IDLE
+
 enum StateMachine {
 	IDLE,
 	BATENDO,
@@ -18,7 +20,7 @@ func ataque():
 	elif states == StateMachine.BATENDO:
 		player.velocity = Vector2()
 		return
-	
+
 	if Input.is_action_just_pressed("RMB") and not states == StateMachine.BATENDO:
 		$AnimationPlayer.play("attack_sword")
 		CameraShake.shake(0.2, 0.5)
@@ -32,8 +34,6 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 # Verifique se a colisão está ocorrendo
 func _on_area_entered(area: Area2D) -> void:
-	print(area)
 	if area:
 		if area.is_in_group("recurso"):
 			area.vida -= 50
-			print("Acertou recurso:", area.recurso_obj, "- Vida restante:", area.vida)

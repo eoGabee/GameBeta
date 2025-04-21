@@ -10,6 +10,7 @@ self_modulate = Color(1, 0, 1, 1)
 script = ExtResource("1_1bjcj")
 
 [node name="col" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_gic7n")
 debug_color = Color(1, 0, 0.701961, 0)
 

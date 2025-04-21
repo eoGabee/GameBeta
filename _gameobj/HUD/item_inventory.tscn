@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw0aaoysm1six"]
+
+[ext_resource type="Script" uid="uid://bj4h7etjybax3" path="res://_dev/scripts/Inventario/item_inventory.gd" id="1_qlgsi"]
+[ext_resource type="Texture2D" uid="uid://dganf0yrccbft" path="res://icon.svg" id="2_yc6el"]
+
+[node name="Item_Inventory" type="Control"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 3.0
+offset_right = -951.0
+offset_bottom = -607.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qlgsi")
+
+[node name="bg" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 206.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 0.729412)
+
+[node name="quantidade" type="Label" parent="."]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 10.0
+offset_right = 195.0
+offset_bottom = 33.0
+text = "X999"
+
+[node name="nome" type="Label" parent="."]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 8.0
+offset_right = 119.0
+offset_bottom = 31.0
+text = "nomew"
+
+[node name="texture" type="Sprite2D" parent="."]
+position = Vector2(28, 20)
+scale = Vector2(0.359375, 0.359375)
+texture = ExtResource("2_yc6el")

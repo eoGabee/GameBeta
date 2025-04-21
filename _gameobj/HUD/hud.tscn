@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxiuo3edml3f8"]
+[gd_scene load_steps=2 format=3 uid="uid://bxiuo3edml3f8"]
 
 [ext_resource type="Script" uid="uid://dnfmrgcug5lip" path="res://_dev/scripts/interface/hud.gd" id="1_q5ipa"]
-[ext_resource type="PackedScene" uid="uid://ch4kj22qwjg6i" path="res://_gameobj/HUD/menu_hud_craft.tscn" id="2_3u55h"]
 
 [node name="HUD" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,6 +13,7 @@ grow_vertical = 2
 script = ExtResource("1_q5ipa")
 
 [node name="Canva" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="bg1" type="ColorRect" parent="Canva"]
 offset_right = 132.0
@@ -47,4 +48,22 @@ offset_right = 105.0
 offset_bottom = 115.0
 text = "Folego: 00"
 
-[node name="MENU_HUD_CRAFT" parent="." instance=ExtResource("2_3u55h")]
+[node name="INVENTORY" type="ColorRect" parent="Canva"]
+offset_left = 512.0
+offset_right = 552.0
+offset_bottom = 40.0
+scale = Vector2(16.3508, 16.3508)
+color = Color(0, 0, 0, 0.607843)
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="INV" type="CanvasLayer" parent="Control"]
+
+[node name="BoxContainer" type="BoxContainer" parent="Control/INV" groups=["bc"]]
+offset_left = 525.0
+offset_top = 19.0
+offset_right = 904.0
+offset_bottom = 640.0

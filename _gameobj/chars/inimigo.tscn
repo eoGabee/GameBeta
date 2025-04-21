@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1nb1kqqxdjrj"]
+
+[ext_resource type="Script" uid="uid://bjyd1f4ofsv2" path="res://_dev/scripts/inimigo.gd" id="1_tukor"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_34dm1"]
+
+[node name="Inimigo" type="CharacterBody2D"]
+script = ExtResource("1_tukor")
+
+[node name="col" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_34dm1")
